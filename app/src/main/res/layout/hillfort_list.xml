@@ -18,6 +18,7 @@
       android:id="@+id/toolbarMain"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:background="@color/colorAccent"
       app:titleTextColor="@color/colorPrimary" />
   </android.support.design.widget.AppBarLayout>
 
