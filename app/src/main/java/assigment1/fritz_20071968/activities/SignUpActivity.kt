@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import assigment1.fritz_20071968.models.Hillfort
 import assigment1.fritz_20071968.R
 import kotlinx.android.synthetic.main.signup.*
-import assigment1.fritz_20071968.models.User
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -29,13 +27,16 @@ class SignUpActivity : AppCompatActivity() {
         Toast.makeText(this@SignUpActivity, "Missing Entries", Toast.LENGTH_SHORT).show()
       }
       else{
-        val loginIntent = Intent(this@SignUpActivity, MainActivity::class.java)
+        //TODO ADD TO JSON
+        val loginIntent = Intent(this@SignUpActivity, HillfortActivity::class.java)
         startActivity(loginIntent)
+        finish()
       }
     }
     else if(view.id == R.id.signup_cancel)
     {
       startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+      finish()
     }
   }
 }

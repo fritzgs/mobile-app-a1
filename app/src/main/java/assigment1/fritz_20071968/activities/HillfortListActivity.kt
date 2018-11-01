@@ -47,13 +47,29 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
-      R.id.item_add -> startActivityForResult<MainActivity>(0)
+      R.id.item_add ->
+      {
+        startActivityForResult<HillfortActivity>(0)
+        finish()
+      }
+      R.id.settings ->
+      {
+        startActivityForResult<SettingsActivity>(0)
+        finish()
+      }
+      R.id.logout ->
+      {
+        //CHANGE/SET THE USER SOMEHOW
+        startActivityForResult<LoginActivity>(0)
+        finish()
+      }
     }
+
     return super.onOptionsItemSelected(item)
   }
 
   override fun onHillfortClick(hillfort: HillfortModel) {
-    startActivityForResult(intentFor<MainActivity>().putExtra("hillfort_edit", hillfort), 0)
+    startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort), 0)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

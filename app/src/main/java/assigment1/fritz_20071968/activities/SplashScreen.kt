@@ -13,7 +13,7 @@ class SplashScreen : AppCompatActivity() {
     setContentView(R.layout.splash)
     Timer().schedule( object : TimerTask(){
       override fun run(){
-        val itent= Intent(this@SplashScreen, LoginActivity::class.java)
+        val itent= Intent(this@SplashScreen, HillfortActivity::class.java)
         startActivity(itent)
         finish()
       }

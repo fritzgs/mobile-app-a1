@@ -16,18 +16,15 @@ class LoginActivity : AppCompatActivity(){
 
   fun onClick(view : View)
   {
-    if(view.id == R.id.loginBtn)
-    {
-      if(emailText.text.toString().equals("test@test.com") && passText.text.toString().equals("password"))
-      {
+    if(view.id == R.id.loginBtn) {
+      //TODO verify using json
+      if (emailText.text.toString().equals("test@test.com") && passText.text.toString().equals("password")) {
         print("Success")
         Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()
         val loginIntent = Intent(this@LoginActivity, HillfortListActivity::class.java)
         startActivity(loginIntent)
-
-      }
-      else
-      {
+        finish()
+      } else {
         print("failed")
         Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show()
       }
@@ -37,7 +34,8 @@ class LoginActivity : AppCompatActivity(){
     {
       val signUpIntent = Intent(this@LoginActivity, SignUpActivity::class.java)
       startActivity(signUpIntent)
+      finish()
     }
-  }
 
+  }
 }

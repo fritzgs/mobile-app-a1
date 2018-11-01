@@ -16,6 +16,8 @@ fun generateRandomId(): Long {
   return Random().nextLong()
 }
 
+
+
 class HillfortJSONStore : HillfortStore, AnkoLogger {
 
   val context: Context
@@ -27,6 +29,8 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
       deserialize()
     }
   }
+
+  //TODO add delete 
 
   override fun findAll(): MutableList<HillfortModel> {
     return hillforts
@@ -40,7 +44,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
 
 
   override fun update(hillfort: HillfortModel) {
-    // todo
+    // todo add update
   }
 
   private fun serialize() {

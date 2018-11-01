@@ -9,16 +9,14 @@ import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.helpers.readImage
+import assigment1.fritz_20071968.helpers.readImageFromPath
 import assigment1.fritz_20071968.helpers.showImagePicker
 import assigment1.fritz_20071968.models.Location
 import kotlinx.android.synthetic.main.main.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 
 
-class MainActivity : AppCompatActivity(), AnkoLogger {
+class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   var hillfort = HillfortModel()
   lateinit var app: MainApp
@@ -40,9 +38,23 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
       hillfort = intent.extras.getParcelable<HillfortModel>("hillfort_edit")
       hillfortTitle.setText(hillfort.title)
       description.setText(hillfort.description)
-      //ADD IMAGE SET BITMAP
+      chooseImage.setText("Change Image")
+      btnAdd.setText(R.string.save)
 
-      btnAdd.setText(R.string.save_hillfort)
+      hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+      if(hillfort.image != null) {
+        chooseImage.setText(R.string.change_hillfort_image)
+      }
+
+      hillfortLocation.setOnClickListener {
+        val location = Location(52.245696, -7.139102, 15f)
+        if (hillfort.zoom != 0f) {
+          location.lat =  hillfort.lat
+          location.lng = hillfort.lng
+          location.zoom = hillfort.zoom
+        }
+        startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
+      }
     }
 
     btnAdd.setOnClickListener()
@@ -63,16 +75,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
       finish()
     }//end btnAdd
 
-    //IMPLEMENT FOR MAPS
-    hillfortLocation.setOnClickListener {
-      val location = Location(52.245696, -7.139102, 15f)
-      if (hillfort.zoom != 0f) {
-        location.lat = hillfort.lat
-        location.lng = hillfort.lng
-        location.zoom = hillfort.zoom
-      }
-      startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
-    }//end hillfortLocation
 
 
     chooseImage.setOnClickListener {
@@ -88,13 +90,20 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
       R.id.item_cancel -> {
-        //CHAnGE LOGIN TO LIST
-        startActivity(Intent(this@MainActivity, HillfortListActivity::class.java))
+        //TODO CHANGE LOGIN TO LIST
+        startActivityForResult<HillfortListActivity>(0)
         finish()
       }
+      R.id.item_delete ->
+      {
+        //TODO delete from JSON
+        startActivityForResult<HillfortListActivity>(0)
+        finish()
+      }
+
     }
     return super.onOptionsItemSelected(item)
-  }//Ed onOptionsItemSelected
+  }//End onOptionsItemSelected
 
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

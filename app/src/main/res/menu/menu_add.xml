@@ -4,6 +4,11 @@
 
   <item
     android:id="@+id/item_cancel"
-    android:title="@string/menu_cancelHillfort"
+    android:title="@string/menu_cancel"
     app:showAsAction="always"/>
+  <item
+    android:id="@+id/item_delete"
+    android:icon="@android:drawable/ic_menu_delete"
+    android:title="@string/menu_itemDel"
+    app:showAsAction="always" />
 </menu>

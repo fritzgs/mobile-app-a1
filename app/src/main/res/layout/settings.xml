@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="assigment1.fritz_20071968.activities.HillfortActivity">
+  tools:context="assigment1.fritz_20071968.activities.SettingsActivity">
 
   <RelativeLayout
     android:layout_width="match_parent"
@@ -20,7 +20,7 @@
       app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
       <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarAdd"
+        android:id="@+id/toolbarSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@color/colorPrimary" />
@@ -38,77 +38,81 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputEditText
-          android:id="@+id/hillfortTitle"
+          android:id="@+id/name_settings"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_margin="8dp"
-          android:hint="@string/hint_hillfortTitle"
           android:inputType="text"
           android:maxLength="25"
           android:maxLines="1"
           android:padding="8dp"
+          android:text=""
+          android:textAlignment="center"
           android:textColor="@color/colorPrimaryDark"
           android:textSize="14sp" />
 
         <android.support.design.widget.TextInputEditText
-          android:id="@+id/description"
+          android:id="@+id/email_settings"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_margin="8dp"
-          android:hint="@string/hint_hillfortDescription"
           android:inputType="text"
           android:maxLength="25"
           android:maxLines="1"
           android:padding="8dp"
+          android:text=""
+          android:textAlignment="center"
+          android:textColor="@color/colorPrimaryDark"
+          android:textSize="14sp" />
+
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/pass_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="8dp"
+          android:inputType="textPassword"
+          android:maxLength="25"
+          android:maxLines="1"
+          android:padding="8dp"
+          android:text=""
+          android:hint="Password"
+          android:textAlignment="center"
           android:textColor="@color/colorPrimaryDark"
           android:textSize="14sp" />
 
         <Button
-          android:id="@+id/chooseImage"
+          android:id="@+id/total_visited"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_margin="16dp"
-          android:background="@color/colorAccent"
-          android:paddingBottom="8dp"
-          android:paddingTop="8dp"
-          android:text="@string/button_addImage"
-          android:textColor="@color/colorPrimary"
-          android:textSize="16sp"/>
-
-        <ImageView
-          android:id="@+id/hillfortImage"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:srcCompat="@mipmap/ic_launcher"/>
-
-        <Button
-          android:id="@+id/hillfortLocation"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="16dp"
-          android:background="@color/colorAccent"
+          android:background="@android:color/transparent"
           android:paddingBottom="8dp"
           android:paddingTop="8dp"
           android:stateListAnimator="@null"
-          android:text="@string/button_location"
           android:textColor="@color/colorPrimary"
-          android:textSize="16sp"/>
-
-        <Button
-          android:id="@+id/btnAdd"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="16dp"
-          android:background="@color/colorAccent"
-          android:paddingBottom="8dp"
-          android:paddingTop="8dp"
-          android:stateListAnimator="@null"
-          android:text="@string/button_addHillfort"
-          android:textColor="@color/colorPrimary"
+          android:text=""
           android:textSize="16sp" />
+
+        <Button
+          android:id="@+id/save_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="16dp"
+          android:onClick="onClick"
+          android:paddingBottom="8dp"
+          android:paddingTop="8dp"
+          android:stateListAnimator="@null"
+          android:text="@string/save"
+          android:textColor="@color/colorPrimary"
+          android:textSize="16sp"
+          android:visibility="visible" />
 
       </LinearLayout>
     </ScrollView>
 
+
   </RelativeLayout>
+
+
 </android.support.constraint.ConstraintLayout>

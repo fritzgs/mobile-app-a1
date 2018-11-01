@@ -27,7 +27,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
   override fun onMarkerDragStart(marker: Marker) {
 
 
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    TODO("not implemented") //To change body of created functions use File | SettingsActivity | File Templates.
   }
 
   override fun onMarkerDragEnd(marker: Marker) {
@@ -37,7 +37,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
   }
 
   override fun onMarkerDrag(marker: Marker) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    TODO("not implemented") //To change body of created functions use File | SettingsActivity | File Templates.
   }
 
   override fun onBackPressed() {

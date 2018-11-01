@@ -12,7 +12,7 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".activities.MainActivity">
+    <activity android:name=".activities.HillfortActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
@@ -77,6 +77,8 @@
     <activity
       android:name=".activities.MapsActivity"
       android:label="@string/title_activity_maps"></activity>
+
+    <activity android:name=".activities.SettingsActivity"></activity>
   </application>
 
 </manifest>
