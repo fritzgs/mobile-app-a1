@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
@@ -22,6 +23,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     setContentView(R.layout.hillfort_list)
     app = application as MainApp
 
+    Toast.makeText(this@HillfortListActivity, app.getEmail(), Toast.LENGTH_SHORT).show()
     toolbarMain.title = title
     setSupportActionBar(toolbarMain)
 

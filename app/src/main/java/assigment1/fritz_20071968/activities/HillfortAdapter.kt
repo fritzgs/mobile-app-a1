@@ -14,7 +14,9 @@ interface HillfortListener {
   fun onHillfortClick(hillfort: HillfortModel)
 }
 
-class HillfortAdapter constructor(private var hillforts: List<HillfortModel>,
+class HillfortAdapter
+
+  constructor(private var hillforts: List<HillfortModel>,
                                    private val listener: HillfortListener) : RecyclerView.Adapter<HillfortAdapter.MainHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {

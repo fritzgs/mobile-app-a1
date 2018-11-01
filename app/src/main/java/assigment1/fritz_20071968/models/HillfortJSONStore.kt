@@ -30,7 +30,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     }
   }
 
-  //TODO add delete 
+  //TODO add delete
 
   override fun findAll(): MutableList<HillfortModel> {
     return hillforts
