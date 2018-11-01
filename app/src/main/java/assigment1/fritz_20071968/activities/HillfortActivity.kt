@@ -3,8 +3,11 @@ package assigment1.fritz_20071968.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.CheckBox
+import android.widget.Toast
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.R
@@ -14,6 +17,7 @@ import assigment1.fritz_20071968.helpers.showImagePicker
 import assigment1.fritz_20071968.models.Location
 import kotlinx.android.synthetic.main.main.*
 import org.jetbrains.anko.*
+import java.util.*
 
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -22,6 +26,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   lateinit var app: MainApp
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
+  var cancelBtn = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -55,6 +60,53 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
         startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
       }
+
+      visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
+        if(visited_checkbox.isChecked)
+        {
+          visited_checkbox.setChecked(true)
+          visited_checkbox.setText(String.format(getString(R.string.checkbox), Date()))
+          hillfort.visited = true
+        }
+        else
+        {
+          visited_checkbox.setChecked(false)
+          visited_checkbox.setText(String.format(getString(R.string.checkbox), ""))
+          hillfort.visited = false
+        }
+      }
+    }
+
+    if(hillfort.visited == true)
+    {
+      visited_checkbox.setChecked(true)
+      visited_checkbox.setText(String.format(getString(R.string.checkbox), Date()))
+    }
+
+    visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
+      if(visited_checkbox.isChecked)
+      {
+        visited_checkbox.setChecked(true)
+        visited_checkbox.setText(String.format(getString(R.string.checkbox), Date()))
+
+        hillfort.visited = true
+      }
+      else
+      {
+        visited_checkbox.setChecked(false)
+        visited_checkbox.setText(String.format(getString(R.string.checkbox), ""))
+        hillfort.visited = false
+      }
+    }
+
+    hillfortLocation.setOnClickListener {
+      val location = Location(52.245696, -7.139102, 15f)
+      if (hillfort.zoom != 0f) {
+        location.lat =  hillfort.lat
+        location.lng = hillfort.lng
+        location.zoom = hillfort.zoom
+      }
+      startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
     }
 
     btnAdd.setOnClickListener()
@@ -89,16 +141,30 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
+
       R.id.item_cancel -> {
-        //TODO CHANGE LOGIN TO LIST
+        // /TODO CHANGE LOGIN TO LIST
         startActivityForResult<HillfortListActivity>(0)
         finish()
       }
+
       R.id.item_delete ->
       {
-        //TODO delete from JSON
-        startActivityForResult<HillfortListActivity>(0)
-        finish()
+        if(intent.hasExtra("hillfort_edit"))
+        {
+          val confirmAlert = AlertDialog.Builder(this@HillfortActivity)
+          confirmAlert.setTitle("Delete Item")
+          confirmAlert.setMessage("Confirm to Delete "+ hillfort.title)
+          confirmAlert.setPositiveButton("YES")
+          {
+            dialog, which ->
+            app.hillforts.delete(hillfort.copy())
+            startActivityForResult<HillfortListActivity>(0)
+            finish()
+          }
+          confirmAlert.setNegativeButton("NO") {dialog, which -> }
+          confirmAlert.create().show()
+        }
       }
 
     }

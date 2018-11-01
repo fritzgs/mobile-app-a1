@@ -2,6 +2,7 @@ package assigment1.fritz_20071968.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -27,7 +28,15 @@ class SettingsActivity : AppCompatActivity()
     name_settings.setText("NAME")
     email_settings.setText("EMAIL")
     pass_settings.setText("hidden")
-    total_visited.setText(String.format(getString(R.string.total_visited), 12))
+    var count : Int = 0
+    for(i in app.hillforts.findAll())
+    {
+      if(i.visited==true)
+      {
+        count += 1
+      }
+    }
+    total_visited.setText(String.format(getString(R.string.total_visited) , count, app.hillforts.findAll().size))
   }
 
   fun onClick(view: View)
@@ -54,10 +63,21 @@ class SettingsActivity : AppCompatActivity()
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
-      R.id.settings_logout -> {
+      R.id.settings_logout ->
+      {
         //CHANGE/SET THE USER SOMEHOW
-        startActivityForResult<LoginActivity>(0)
-        finish()
+        val confirmAlert = AlertDialog.Builder(this@SettingsActivity)
+        confirmAlert.setTitle("Logout")
+        confirmAlert.setPositiveButton("YES")
+        {
+          dialog, which ->
+          //TODO make sure user is different
+          startActivityForResult<LoginActivity>(0)
+          finish()
+        }
+        confirmAlert.setNegativeButton("NO") {dialog, which -> }
+        confirmAlert.create().show()
+
       }
       R.id.settings_cancel ->
       {

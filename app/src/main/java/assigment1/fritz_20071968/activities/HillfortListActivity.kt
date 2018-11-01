@@ -2,6 +2,7 @@ package assigment1.fritz_20071968.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -23,7 +24,6 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     setContentView(R.layout.hillfort_list)
     app = application as MainApp
 
-    Toast.makeText(this@HillfortListActivity, app.getEmail(), Toast.LENGTH_SHORT).show()
     toolbarMain.title = title
     setSupportActionBar(toolbarMain)
 
@@ -62,8 +62,18 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
       R.id.logout ->
       {
         //CHANGE/SET THE USER SOMEHOW
-        startActivityForResult<LoginActivity>(0)
-        finish()
+        val confirmAlert = AlertDialog.Builder(this@HillfortListActivity)
+        confirmAlert.setTitle("Logout")
+        confirmAlert.setPositiveButton("YES")
+        {
+          dialog, which ->
+          //TODO make sure user is different
+          startActivityForResult<LoginActivity>(0)
+          finish()
+        }
+        confirmAlert.setNegativeButton("NO") {dialog, which -> }
+        confirmAlert.create().show()
+
       }
     }
 

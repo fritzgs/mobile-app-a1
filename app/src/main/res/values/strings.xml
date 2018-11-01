@@ -15,6 +15,7 @@
   <string name="change_hillfort_image">Change Hillfort image</string>
   <string name="button_location">Set Location</string>
   <string name="title_activity_maps">Map</string>
-  <string name="total_visited">Visisted: %1$s</string>
+  <string name="total_visited">Visisted: %1$s / %2$s</string>
+  <string name="checkbox">Visisted %1$s</string>
 
 </resources>

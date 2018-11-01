@@ -1,5 +1,7 @@
 package assigment1.fritz_20071968.activities
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +38,14 @@ class HillfortAdapter
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
+      if(hillfort.visited==true)
+      {
+        itemView.getBackground().setColorFilter(Color.parseColor("#009933"), PorterDuff.Mode.DARKEN)
+      }
+      else
+      {
+        itemView.getBackground().setColorFilter(Color.parseColor("#0080ff"), PorterDuff.Mode.DARKEN)
+      }
       itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
     }
   }
