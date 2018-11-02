@@ -62,13 +62,13 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
       R.id.logout ->
       {
         //CHANGE/SET THE USER SOMEHOW
-        app.setEmail("")
+
         val confirmAlert = AlertDialog.Builder(this@HillfortListActivity)
         confirmAlert.setTitle("Logout")
         confirmAlert.setPositiveButton("YES")
         {
           dialog, which ->
-          //TODO make sure user is different
+          app.setEmail("")
           startActivityForResult<LoginActivity>(0)
           finish()
         }

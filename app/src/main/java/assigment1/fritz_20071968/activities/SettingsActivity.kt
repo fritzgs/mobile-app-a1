@@ -85,7 +85,6 @@ class SettingsActivity : AppCompatActivity()
     when (item?.itemId) {
       R.id.settings_logout ->
       {
-        //CHANGE/SET THE USER SOMEHOW
         val confirmAlert = AlertDialog.Builder(this@SettingsActivity)
         confirmAlert.setTitle("Logout")
         confirmAlert.setPositiveButton("YES")
