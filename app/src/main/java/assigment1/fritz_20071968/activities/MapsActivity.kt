@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import assigment1.fritz_20071968.R
+import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.models.Location
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,11 +24,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
   private lateinit var mMap: GoogleMap
   var location = Location()
+  var hillfort = HillfortModel()
 
   override fun onMarkerDragStart(marker: Marker) {
-
-
-    TODO("not implemented") //To change body of created functions use File | SettingsActivity | File Templates.
+    marker.getPosition()
   }
 
   override fun onMarkerDragEnd(marker: Marker) {
@@ -37,7 +37,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
   }
 
   override fun onMarkerDrag(marker: Marker) {
-    TODO("not implemented") //To change body of created functions use File | SettingsActivity | File Templates.
+    marker.getPosition()
   }
 
   override fun onBackPressed() {
