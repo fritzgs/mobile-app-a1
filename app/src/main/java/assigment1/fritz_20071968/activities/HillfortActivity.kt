@@ -116,14 +116,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         toast(R.string.enter_hillfort_title)
       } else {
         if (edit) {
-          app.hillforts.update(hillfort.copy())
+          app.users.updateHillfort(hillfort.copy(), app.getEmail())
         } else {
-          app.hillforts.create(hillfort.copy())
+          app.users.createHillfort(hillfort.copy(), app.getEmail())
         }
+        info("Add Button Pressed:  $hillfortTitle")
+        setResult(AppCompatActivity.RESULT_OK)
+        finish()
       }
-      info("Add Button Pressed:  $hillfortTitle")
-      setResult(AppCompatActivity.RESULT_OK)
-      finish()
     }//end btnAdd
 
 
@@ -157,7 +157,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
           confirmAlert.setPositiveButton("YES")
           {
             dialog, which ->
-            app.hillforts.delete(hillfort.copy())
+            app.users.deleteHillfort(hillfort.copy(), app.getEmail())
             startActivityForResult<HillfortListActivity>(0)
             finish()
           }

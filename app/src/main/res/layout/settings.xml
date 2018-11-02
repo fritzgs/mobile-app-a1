@@ -108,6 +108,24 @@
           android:textSize="16sp"
           android:visibility="visible" />
 
+        <Button
+          android:id="@+id/delete_user"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="16dp"
+          android:background="@android:color/holo_red_dark"
+          android:elevation="0dp"
+          android:onClick="onClick"
+          android:paddingBottom="8dp"
+          android:paddingTop="8dp"
+          android:stateListAnimator="@null"
+          android:text="@string/delete"
+          android:enabled="true"
+          android:textColor="@color/colorPrimaryDark"
+          android:textSize="16sp"
+          android:visibility="visible" />
+
+
       </LinearLayout>
     </ScrollView>
 

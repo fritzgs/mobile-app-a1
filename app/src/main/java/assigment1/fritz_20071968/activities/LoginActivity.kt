@@ -23,7 +23,8 @@ class LoginActivity : AppCompatActivity(){
   {
     if(view.id == R.id.loginBtn) {
       //TODO verify using json
-      if (emailText.text.toString().equals("test@test.com") && passText.text.toString().equals("password")) {
+      if(app.users.userExist(emailText.text.toString(), passText.text.toString()))
+      {
         app.setEmail(emailText.text.toString())
         print("Success")
         Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()

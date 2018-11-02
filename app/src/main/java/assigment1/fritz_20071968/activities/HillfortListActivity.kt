@@ -34,7 +34,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
   }
 
   private fun loadHillforts() {
-    showHillforts(app.hillforts.findAll())
+    showHillforts(app.users.findAll(app.getEmail()))
   }
 
   fun showHillforts (hillforts: List<HillfortModel>) {
@@ -62,6 +62,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
       R.id.logout ->
       {
         //CHANGE/SET THE USER SOMEHOW
+        app.setEmail("")
         val confirmAlert = AlertDialog.Builder(this@HillfortListActivity)
         confirmAlert.setTitle("Logout")
         confirmAlert.setPositiveButton("YES")

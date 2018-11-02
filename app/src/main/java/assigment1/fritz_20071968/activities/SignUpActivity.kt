@@ -6,13 +6,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import assigment1.fritz_20071968.R
+import assigment1.fritz_20071968.main.MainApp
+import assigment1.fritz_20071968.models.HillfortModel
+import assigment1.fritz_20071968.models.User
 import kotlinx.android.synthetic.main.signup.*
 
 class SignUpActivity : AppCompatActivity() {
 
+
+  lateinit var app: MainApp
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.signup)
+    app = application as MainApp
   }
 
 
@@ -27,8 +34,9 @@ class SignUpActivity : AppCompatActivity() {
         Toast.makeText(this@SignUpActivity, "Missing Entries", Toast.LENGTH_SHORT).show()
       }
       else{
-        //TODO ADD TO JSON
-        val loginIntent = Intent(this@SignUpActivity, HillfortActivity::class.java)
+        app.users.createUser(User(name, email, pass,  ArrayList<HillfortModel>()))
+        app.setEmail(email)
+        val loginIntent = Intent(this@SignUpActivity, HillfortListActivity::class.java)
         startActivity(loginIntent)
         finish()
       }

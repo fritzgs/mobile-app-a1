@@ -6,6 +6,7 @@
     android:id="@+id/settings_cancel"
     android:title="@string/menu_cancel"
     app:showAsAction="always"/>
+
   <item
     android:id="@+id/settings_logout"
     android:icon="@drawable/common_full_open_on_phone"

@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.Toast
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
+import assigment1.fritz_20071968.models.HillfortModel
+import assigment1.fritz_20071968.models.User
 import kotlinx.android.synthetic.main.settings.*
 import org.jetbrains.anko.startActivityForResult
 
@@ -25,18 +27,18 @@ class SettingsActivity : AppCompatActivity()
     toolbarSettings.title = title
     setSupportActionBar(toolbarSettings)
 
-    name_settings.setText("NAME")
-    email_settings.setText("EMAIL")
-    pass_settings.setText("hidden")
+    name_settings.setText(app.users.findUser(app.getEmail()).name)
+    email_settings.setText(app.users.findUser(app.getEmail()).email)
+    pass_settings.setHint("PASSWORD")
     var count : Int = 0
-    for(i in app.hillforts.findAll())
+    for(i in app.users.findAll(app.getEmail()))
     {
       if(i.visited==true)
       {
         count += 1
       }
     }
-    total_visited.setText(String.format(getString(R.string.total_visited) , count, app.hillforts.findAll().size))
+    total_visited.setText(String.format(getString(R.string.total_visited) , count, app.users.findUser(app.getEmail()).hillfortList.size))
   }
 
   fun onClick(view: View)
@@ -45,7 +47,8 @@ class SettingsActivity : AppCompatActivity()
     {
       if(!name_settings.text.isNullOrBlank() and !email_settings.text.isNullOrBlank() and !pass_settings.text.isNullOrBlank())
       {
-        //TODO UPDATE JSON
+        app.users.updateUser(User(name_settings.text.toString(), email_settings.text.toString(), pass_settings.text.toString(), app.users.findAll(app.getEmail())))
+        app.setEmail(email_settings.text.toString())
         startActivity(Intent(this@SettingsActivity, HillfortListActivity::class.java))
         finish()
       }
@@ -54,6 +57,23 @@ class SettingsActivity : AppCompatActivity()
         Toast.makeText(this@SettingsActivity, "Missing Entries", Toast.LENGTH_SHORT).show()
       }
     }
+   if(view.id==R.id.delete_user)
+   {
+     val confirmAlert = AlertDialog.Builder(this@SettingsActivity)
+     confirmAlert.setTitle("Delete")
+     confirmAlert.setMessage("Are you sure you want to delete this user?")
+     confirmAlert.setPositiveButton("YES")
+     {
+       dialog, which ->
+       Toast.makeText(this@SettingsActivity, "Deleted User", Toast.LENGTH_SHORT).show()
+       app.users.deleteUser(app.users.findUser(app.getEmail()))
+       app.setEmail("")
+       startActivityForResult<LoginActivity>(0)
+       finish()
+     }
+     confirmAlert.setNegativeButton("NO") {dialog, which -> }
+     confirmAlert.create().show()
+   }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -71,7 +91,7 @@ class SettingsActivity : AppCompatActivity()
         confirmAlert.setPositiveButton("YES")
         {
           dialog, which ->
-          //TODO make sure user is different
+          app.setEmail("")
           startActivityForResult<LoginActivity>(0)
           finish()
         }
