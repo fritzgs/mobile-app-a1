@@ -48,7 +48,7 @@ class UserJSONStore : UserStore
     var foundHillfort : HillfortModel? = foundUser!!.hillfortList.find { h -> h.id == hillfort.id }
     if(foundHillfort != null)
     {
-      foundUser!!.hillfortList.remove(hillfort)
+      foundUser!!.hillfortList.remove(foundHillfort)
     }
   }
 
