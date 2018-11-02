@@ -1,3 +1,9 @@
+/***
+ * @author Fritz Gerald Santos - adapted from the Mobile App Development labs by Dr. Eamonn de Leaster
+ *
+ * This acittivy is for adding/editing hillfort entries
+ */
+
 package assigment1.fritz_20071968.activities
 
 import android.content.Intent
@@ -6,8 +12,6 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.CheckBox
-import android.widget.Toast
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.R
@@ -27,6 +31,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   val IMAGE_REQUEST = 1
   val LOCATION_REQUEST = 2
 
+  /**
+   * Runs when the activity starts
+   */
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main)
@@ -37,19 +44,23 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     app = application as MainApp
     var edit = false
 
+    //WHEN EDIT MODE
     if (intent.hasExtra("hillfort_edit")) {
       edit = true
-      hillfort = intent.extras.getParcelable<HillfortModel>("hillfort_edit")
+      hillfort = intent.extras.getParcelable<HillfortModel>("hillfort_edit") //gets the hilfort model
+      //sets the layout components text using hillfort data
       hillfortTitle.setText(hillfort.title)
       description.setText(hillfort.description)
       chooseImage.setText("Change Image")
       btnAdd.setText(R.string.save)
 
+      //Image button - if there's a picture already, change the button text
       hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
       if(hillfort.image != null) {
         chooseImage.setText(R.string.change_hillfort_image)
       }
 
+      //location button - set the location to the data in the hillfort
       hillfortLocation.setOnClickListener {
         val location = Location(52.245696, -7.139102, 15f)
         if (hillfort.zoom != 0f) {
@@ -57,37 +68,42 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
           location.lng = hillfort.lng
           location.zoom = hillfort.zoom
         }
-        startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
+        startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST) //start google maps activity
       }
 
+      // @author Fritz Gerald Santos - as described in edit mode.
+      if(hillfort.visited == true)
+      {
+        visited_checkbox.setChecked(true)
+        visited_checkbox.setText(String.format(getString(R.string.checkbox), hillfort.date))
+      }
+
+      //@author Fritz Gerald Santos - visisted checkbox
       visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
-        if(visited_checkbox.isChecked)
+        if(visited_checkbox.isChecked) //if it has been checked - set the text of the checkbox component to string/checkbox + date it was checked
         {
+          hillfort.date = Date()
           visited_checkbox.setChecked(true)
-          visited_checkbox.setText(String.format(getString(R.string.checkbox), Date()))
+          visited_checkbox.setText(String.format(getString(R.string.checkbox), hillfort.date))
           hillfort.visited = true
         }
         else
         {
           visited_checkbox.setChecked(false)
-          visited_checkbox.setText(String.format(getString(R.string.checkbox), ""))
+          visited_checkbox.setText(String.format(getString(R.string.checkbox), "")) //if *not checked* - just set text as "visisted"
           hillfort.visited = false
         }
       }
     }
 
-    if(hillfort.visited == true)
-    {
-      visited_checkbox.setChecked(true)
-      visited_checkbox.setText(String.format(getString(R.string.checkbox), Date()))
-    }
+    //ADD NEW MODE
 
     visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
       if(visited_checkbox.isChecked)
       {
+        hillfort.date = Date()
         visited_checkbox.setChecked(true)
-        visited_checkbox.setText(String.format(getString(R.string.checkbox), Date()))
-
+        visited_checkbox.setText(String.format(getString(R.string.checkbox), hillfort.date))
         hillfort.visited = true
       }
       else

@@ -64,6 +64,7 @@ class UserJSONStore : UserStore
       foundHillfort.lng = hillfort.lng
       foundHillfort.zoom = hillfort.zoom
       foundHillfort.visited = hillfort.visited
+      foundHillfort.date = hillfort.date
       serialize()
     }
   }
