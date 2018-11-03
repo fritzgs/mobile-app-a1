@@ -1,3 +1,7 @@
+/**
+ * Data models usig Parcelization
+ */
+
 package assigment1.fritz_20071968.models
 
 import android.os.Parcelable

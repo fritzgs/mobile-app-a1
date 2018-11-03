@@ -1,3 +1,7 @@
+/**
+ * Taken from the labs
+ */
+
 package assigment1.fritz_20071968.helpers
 
 import android.content.Context

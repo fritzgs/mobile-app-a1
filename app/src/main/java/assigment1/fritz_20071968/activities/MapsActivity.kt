@@ -1,3 +1,9 @@
+/**
+ * Taken as-is from the labs.
+ *
+ * Google Maps Activity Screen
+ */
+
 package assigment1.fritz_20071968.activities
 
 import android.app.Activity

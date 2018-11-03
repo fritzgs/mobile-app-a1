@@ -1,5 +1,5 @@
 /***
- * @author Fritz Gerald Santos - adapted from the Mobile App Development labs by Dr. Eamonn de Leaster
+ * @author Fritz Gerald Santos - adapted from the Mobile App Development labs by Eamonn Deleastar
  *
  * This acittivy is for adding/editing hillfort entries
  */
@@ -98,6 +98,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
     //ADD NEW MODE
 
+    //@author Fritz Gerald Santos - as previously described
     visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
       if(visited_checkbox.isChecked)
       {
@@ -124,21 +125,22 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
     }
 
+    //Add/save button
     btnAdd.setOnClickListener()
     {
       hillfort.title = hillfortTitle.text.toString()
       hillfort.description = description.text.toString()
       if (hillfort.title.isEmpty()) {
-        toast(R.string.enter_hillfort_title)
+        toast(R.string.enter_hillfort_title) //notifies if title is missing
       } else {
         if (edit) {
-          app.users.updateHillfort(hillfort.copy(), app.getEmail())
+          app.users.updateHillfort(hillfort.copy(), app.getEmail()) //update if edit
         } else {
-          app.users.createHillfort(hillfort.copy(), app.getEmail())
+          app.users.createHillfort(hillfort.copy(), app.getEmail()) //add if new
         }
         info("Add Button Pressed:  $hillfortTitle")
         setResult(AppCompatActivity.RESULT_OK)
-        finish()
+        finish() //closes the activity
       }
     }//end btnAdd
 
@@ -158,11 +160,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     when (item?.itemId) {
 
       R.id.item_cancel -> {
-        // /TODO CHANGE LOGIN TO LIST
         startActivityForResult<HillfortListActivity>(0)
         finish()
       }
 
+      //@author Fritz Gerald Santos - deletes hillfort entry with alert dialog for confirmation
       R.id.item_delete ->
       {
         if(intent.hasExtra("hillfort_edit"))
@@ -173,7 +175,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
           confirmAlert.setPositiveButton("YES")
           {
             dialog, which ->
-            app.users.deleteHillfort(hillfort.copy(), app.getEmail())
+            app.users.deleteHillfort(hillfort.copy(), app.getEmail()) //deletes hillfort in list - identified in json by users email
             startActivityForResult<HillfortListActivity>(0)
             finish()
           }

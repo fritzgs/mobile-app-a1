@@ -1,3 +1,7 @@
+/**
+ * Adapted from the Mobile App Development labs by Eamonn Deleastar
+ */
+
 package assigment1.fritz_20071968.activities
 
 import android.graphics.Color
@@ -10,6 +14,7 @@ import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.helpers.readImageFromPath
 import assigment1.fritz_20071968.models.HillfortModel
 import kotlinx.android.synthetic.main.card_hillfort.view.*
+
 
 
 interface HillfortListener {
@@ -38,6 +43,7 @@ class HillfortAdapter
       itemView.hillfortTitle.text = hillfort.title
       itemView.description.text = hillfort.description
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
+      //Changes the colour of the item depending on the visited status.
       if(hillfort.visited==true)
       {
         itemView.getBackground().setColorFilter(Color.parseColor("#009933"), PorterDuff.Mode.DARKEN)

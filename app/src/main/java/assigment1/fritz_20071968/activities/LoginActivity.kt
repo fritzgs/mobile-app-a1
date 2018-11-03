@@ -1,3 +1,9 @@
+/**
+ * @author Fritz Gerald Santos
+ *
+ * Login Activity -Login and SignUp options
+ */
+
 package assigment1.fritz_20071968.activities
 
 import android.content.Intent
@@ -19,24 +25,26 @@ class LoginActivity : AppCompatActivity(){
 
   }
 
+  /**
+   * Runs when activity starts.
+   */
   fun onClick(view : View)
   {
+    //When the login button is clicked
     if(view.id == R.id.loginBtn) {
-      //TODO verify using json
-      if(app.users.userExist(emailText.text.toString(), passText.text.toString()))
+      if(app.users.userExist(emailText.text.toString(), passText.text.toString())) //checks if the crendentials used matches any in the json file
       {
-        app.setEmail(emailText.text.toString())
-        print("Success")
+        app.setEmail(emailText.text.toString()) //set the email in the mainapp so that it can be used in the appropriate activities,
         Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()
-        val loginIntent = Intent(this@LoginActivity, HillfortListActivity::class.java)
+        val loginIntent = Intent(this@LoginActivity, HillfortListActivity::class.java) //start the HillfortListActivity
         startActivity(loginIntent)
         finish()
       } else {
-        print("failed")
-        Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show() //if credentials are wrong
       }
     }
 
+    //sign up button opens the Sign up activity
     else if(view.id == R.id.signupBtn)
     {
       val signUpIntent = Intent(this@LoginActivity, SignUpActivity::class.java)

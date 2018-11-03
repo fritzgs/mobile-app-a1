@@ -1,3 +1,9 @@
+/**
+ * @author Fritz Gerald Santos
+ * From Let's Finish this APP - KotLin and Swift Tutorials
+ * "Build a Splash Screen - Android Kotlin Tutorial" @ https://www.youtube.com/watch?v=nMj3hugs6Lk
+ */
+
 package assigment1.fritz_20071968.activities
 
 import android.content.Intent

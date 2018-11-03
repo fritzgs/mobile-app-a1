@@ -1,3 +1,9 @@
+/**
+ * @author Fritz Gerald Santos
+ * Adapted from the labs
+ * Activity for listing the hillfort entries
+ */
+
 package assigment1.fritz_20071968.activities
 
 import android.content.Intent
@@ -7,7 +13,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
@@ -29,14 +34,15 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-//    recyclerView.adapter = HillfortAdapter(app.hillforts.findAll(), this)
     loadHillforts()
   }
 
+  //lists all the entries in Hillfort list
   private fun loadHillforts() {
-    showHillforts(app.users.findAll(app.getEmail()))
+    showHillforts(app.users.findAll(app.getEmail())) //finds hillfort list by user
   }
 
+  //shows list in activity
   fun showHillforts (hillforts: List<HillfortModel>) {
     recyclerView.adapter = HillfortAdapter(hillforts, this)
     recyclerView.adapter?.notifyDataSetChanged()
@@ -61,15 +67,14 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
       }
       R.id.logout ->
       {
-        //CHANGE/SET THE USER SOMEHOW
-
+        //Logout the user
         val confirmAlert = AlertDialog.Builder(this@HillfortListActivity)
         confirmAlert.setTitle("Logout")
         confirmAlert.setPositiveButton("YES")
         {
           dialog, which ->
-          app.setEmail("")
-          startActivityForResult<LoginActivity>(0)
+          app.setEmail("") //sets the user email in mainapp
+          startActivityForResult<LoginActivity>(0) //goes back to login activity
           finish()
         }
         confirmAlert.setNegativeButton("NO") {dialog, which -> }
@@ -81,6 +86,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     return super.onOptionsItemSelected(item)
   }
 
+  //when hillfort entry is clicked - open hillfort activity as edit mode.
   override fun onHillfortClick(hillfort: HillfortModel) {
     startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort), 0)
   }

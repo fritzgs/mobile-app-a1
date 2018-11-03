@@ -1,3 +1,8 @@
+/**
+ * @author Fritz Gerald Santos
+ * Sign Up Activity - adds user object to the json array.
+ */
+
 package assigment1.fritz_20071968.activities
 
 import android.content.Intent
@@ -29,15 +34,15 @@ class SignUpActivity : AppCompatActivity() {
       val name: String = newName.text.toString()
       val email: String  = newEmail.text.toString()
       val pass: String = newPass.text.toString()
-      if (name.equals("") || email.equals("") || pass.equals(""))
+      if (name.equals("") || email.equals("") || pass.equals("")) //adds as long as all fields are filled
       {
         Toast.makeText(this@SignUpActivity, "Missing Entries", Toast.LENGTH_SHORT).show()
       }
-      else{
-        app.users.createUser(User(name, email, pass,  ArrayList<HillfortModel>()))
-        app.setEmail(email)
-        val loginIntent = Intent(this@SignUpActivity, HillfortListActivity::class.java)
-        startActivity(loginIntent)
+      else{ //if all filled
+        app.users.createUser(User(name, email, pass,  ArrayList<HillfortModel>())) //add a new object of User with empty hillfort List
+        app.setEmail(email)//set the email in mainapp to the email entered
+        val signUpIntent = Intent(this@SignUpActivity, HillfortListActivity::class.java) //start hillfortList
+        startActivity(signUpIntent)
         finish()
       }
     }
