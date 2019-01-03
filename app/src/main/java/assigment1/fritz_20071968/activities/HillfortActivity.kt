@@ -216,8 +216,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
     }//End chooseImage
   }//ENF onCreate
 
+
+
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_add, menu)
+
 
 
     if(intent.hasExtra("hillfort_edit"))
@@ -236,7 +239,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
       R.id.share ->
       {
-
+          val i = Intent(android.content.Intent.ACTION_SEND)
+          i.type = "text/plain"
+          i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test")
+          i.putExtra(android.content.Intent.EXTRA_TEXT, hillfort.title +
+                  ": \n" + hillfort.description +
+                  " \nLocation: " + hillfort.lat + ", " + hillfort.lng +
+                  " \n Rating: " + hillfort.rating)
+          startActivity(Intent.createChooser(i, "Share via"))
       }
 
 
