@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity(){
         app.setEmail(emailText.text.toString()) //set the email in the mainapp so that it can be used in the appropriate activities,
         Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()
         val loginIntent = Intent(this@LoginActivity, HillfortListActivity::class.java) //start the HillfortListActivity
-        startActivity(loginIntent)
+        startActivity(loginIntent.putExtra("norm", "norm"))
         finish()
       } else {
         Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show() //if credentials are wrong

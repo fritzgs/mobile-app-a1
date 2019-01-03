@@ -42,7 +42,7 @@ class SignUpActivity : AppCompatActivity() {
         app.users.createUser(User(name, email, pass,  ArrayList<HillfortModel>())) //add a new object of User with empty hillfort List
         app.setEmail(email)//set the email in mainapp to the email entered
         val signUpIntent = Intent(this@SignUpActivity, HillfortListActivity::class.java) //start hillfortList
-        startActivity(signUpIntent)
+        startActivity(signUpIntent.putExtra("norm", "norm"))
         finish()
       }
     }

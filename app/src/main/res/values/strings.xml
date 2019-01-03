@@ -21,5 +21,6 @@
   <string name="checkbox">Visisted %1$s</string>
 
   <string name="rating">Rating: %1$s</string>
+  <string name="fav">Favourites</string>
 
 </resources>

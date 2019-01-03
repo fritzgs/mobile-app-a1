@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
@@ -24,6 +25,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   lateinit var app: MainApp
 
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.hillfort_list)
@@ -34,7 +36,16 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    loadHillforts()
+
+    if(intent.hasExtra("fav"))
+    {
+      loadFavourites()
+    }
+    else if(intent.hasExtra("norm"))
+    {
+      loadHillforts()
+    }
+
   }
 
   //lists all the entries in Hillfort list
@@ -48,13 +59,48 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     recyclerView.adapter?.notifyDataSetChanged()
   }
 
+  private fun loadFavourites()
+  {
+    showHillforts(app.users.findFav(app.getEmail()))
+  }
+
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_list, menu)
+    if(intent.hasExtra("fav"))
+    {
+      menu?.getItem(0)?.setChecked(true)
+      menu?.getItem(0)?.setIcon(android.R.drawable.btn_star_big_on)
+    }
+    else if(intent.hasExtra("norm"))
+    {
+      menu?.getItem(0)?.setChecked(false)
+      menu?.getItem(0)?.setIcon(android.R.drawable.btn_star_big_off)
+    }
     return super.onCreateOptionsMenu(menu)
+
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
+
+      R.id.fav ->
+      {
+        if(item.isChecked)
+        {
+          item.setChecked(false)
+          item.setIcon(android.R.drawable.btn_star_big_off)
+          startActivity(Intent(this@HillfortListActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
+          finish()
+        }
+        else
+        {
+          item.setChecked(true)
+          item.setIcon(android.R.drawable.btn_star_big_on)
+          startActivity(Intent(this@HillfortListActivity, HillfortListActivity::class.java).putExtra("fav", "fav"))
+          finish()
+        }
+      }
+
       R.id.item_add ->
       {
         startActivityForResult<HillfortActivity>(0)
@@ -92,7 +138,14 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    loadHillforts()
+
+    if(intent.hasExtra("fav")) {
+      loadFavourites()
+    }
+    else if(intent.hasExtra("norm"))
+    {
+      loadHillforts()
+    }
     super.onActivityResult(requestCode, resultCode, data)
   }
 }

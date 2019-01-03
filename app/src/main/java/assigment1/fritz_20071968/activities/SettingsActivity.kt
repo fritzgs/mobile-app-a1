@@ -63,7 +63,7 @@ class SettingsActivity : AppCompatActivity()
       {
         app.users.updateUser(User(name_settings.text.toString(), email_settings.text.toString(), pass_settings.text.toString(), app.users.findAll(app.getEmail()))) //update the user
         app.setEmail(email_settings.text.toString()) //reset the email string in mainapp
-        startActivity(Intent(this@SettingsActivity, HillfortListActivity::class.java))
+        startActivity(Intent(this@SettingsActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
         finish()
       }
       else
@@ -116,7 +116,7 @@ class SettingsActivity : AppCompatActivity()
       }
       R.id.settings_cancel ->
       {
-        startActivityForResult<HillfortListActivity>(0)
+        startActivity(Intent(this@SettingsActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
         finish()
       }
     }

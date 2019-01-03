@@ -227,7 +227,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
 
       R.id.item_cancel -> {
-        startActivityForResult<HillfortListActivity>(0)
         finish()
       }
 
@@ -243,7 +242,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
           {
             dialog, which ->
             app.users.deleteHillfort(hillfort.copy(), app.getEmail()) //deletes hillfort in list - identified in json by users email
-            startActivityForResult<HillfortListActivity>(0)
             finish()
           }
           confirmAlert.setNegativeButton("NO") {dialog, which -> }

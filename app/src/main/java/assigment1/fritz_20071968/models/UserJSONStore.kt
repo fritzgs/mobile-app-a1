@@ -171,4 +171,19 @@ class UserJSONStore : UserStore
     users = Gson().fromJson(jsonString, ltype)
   }
 
+  override fun findFav(userEmail: String): MutableList<HillfortModel> {
+    var foundUser : User? = users.find { h -> h.email.equals(userEmail)}
+
+    var favList : MutableList<HillfortModel> = mutableListOf()
+    for(h : HillfortModel in foundUser!!.hillfortList)
+    {
+      if(h.favourite==true)
+      {
+        favList.add(h)
+      }
+    }
+
+    return favList
+  }
+
 }

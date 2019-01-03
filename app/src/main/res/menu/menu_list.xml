@@ -4,20 +4,27 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
-    android:id="@+id/item_add"
-    android:icon="@android:drawable/ic_menu_add"
-    android:title="@string/menu_addHillfort"
-    app:showAsAction="always" />
+      android:id="@+id/fav"
+      android:checkable="true"
+      android:checked="false"
+      android:icon="@android:drawable/btn_star_big_off"
+      android:title="@string/fav"
+      app:showAsAction="always" />
 
   <item
-    android:id="@+id/settings"
-    android:icon="@android:drawable/ic_menu_manage"
-    android:title="@string/menu_settings"
-    app:showAsAction="always" />
+      android:id="@+id/item_add"
+      android:icon="@android:drawable/ic_menu_add"
+      android:title="@string/menu_addHillfort"
+      app:showAsAction="always" />
 
   <item
-    android:id="@+id/logout"
-    android:icon="@drawable/common_full_open_on_phone"
-    android:title="@string/menu_logout"
-    app:showAsAction="always" />
+      android:id="@+id/settings"
+      android:icon="@android:drawable/ic_menu_manage"
+      android:title="@string/menu_settings"
+      app:showAsAction="never" />
+  <item
+      android:id="@+id/logout"
+      android:icon="@drawable/common_full_open_on_phone"
+      android:title="@string/menu_logout"
+      app:showAsAction="never" />
 </menu>
