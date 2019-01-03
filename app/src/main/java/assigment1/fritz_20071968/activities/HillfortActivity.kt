@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ShareActionProvider
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.R
@@ -217,6 +218,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_add, menu)
+
+
+    if(intent.hasExtra("hillfort_edit"))
+    {
+      menu?.getItem(0)?.setVisible(true)
+      menu?.getItem(2)?.setVisible(true)
+    }
+
     return super.onCreateOptionsMenu(menu)
 
 
@@ -225,29 +234,34 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
 
+      R.id.share ->
+      {
+
+      }
+
 
       R.id.item_cancel -> {
+        startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
         finish()
       }
 
       //@author Fritz Gerald Santos - deletes hillfort entry with alert dialog for confirmation
       R.id.item_delete ->
       {
-        if(intent.hasExtra("hillfort_edit"))
+
+        val confirmAlert = AlertDialog.Builder(this@HillfortActivity)
+        confirmAlert.setTitle("Delete Item")
+        confirmAlert.setMessage("Confirm to Delete "+ hillfort.title)
+        confirmAlert.setPositiveButton("YES")
         {
-          val confirmAlert = AlertDialog.Builder(this@HillfortActivity)
-          confirmAlert.setTitle("Delete Item")
-          confirmAlert.setMessage("Confirm to Delete "+ hillfort.title)
-          confirmAlert.setPositiveButton("YES")
-          {
-            dialog, which ->
-            app.users.deleteHillfort(hillfort.copy(), app.getEmail()) //deletes hillfort in list - identified in json by users email
-            finish()
-          }
-          confirmAlert.setNegativeButton("NO") {dialog, which -> }
-          confirmAlert.create().show()
+          dialog, which ->
+          app.users.deleteHillfort(hillfort.copy(), app.getEmail()) //deletes hillfort in list - identified in json by users email
+          finish()
         }
+        confirmAlert.setNegativeButton("NO") {dialog, which -> }
+        confirmAlert.create().show()
       }
+
 
     }
     return super.onOptionsItemSelected(item)

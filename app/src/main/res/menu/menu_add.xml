@@ -3,12 +3,19 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
+      android:id="@+id/share"
+      android:icon="@android:drawable/ic_menu_share"
+      android:title="Share"
+      android:visible="false"
+      app:showAsAction="always"
+  <item
     android:id="@+id/item_cancel"
     android:title="@string/menu_cancel"
     app:showAsAction="always"/>
   <item
-    android:id="@+id/item_delete"
-    android:icon="@android:drawable/ic_menu_delete"
-    android:title="@string/menu_itemDel"
-    app:showAsAction="always" />
+      android:id="@+id/item_delete"
+      android:icon="@android:drawable/ic_menu_delete"
+      android:title="@string/menu_itemDel"
+      android:visible="false"
+      app:showAsAction="always" />
 </menu>
