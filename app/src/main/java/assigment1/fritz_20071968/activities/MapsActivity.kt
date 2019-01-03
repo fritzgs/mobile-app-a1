@@ -26,7 +26,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
   override fun onMarkerClick(marker: Marker): Boolean {
     val loc = LatLng(location.lat, location.lng)
     marker.setSnippet("GPS : " + loc.toString())
-    return false  }
+    return true  }
 
   private lateinit var mMap: GoogleMap
   var location = Location()
@@ -79,10 +79,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     mMap = googleMap
     mMap.setOnMarkerDragListener(this)
     mMap.setOnMarkerClickListener(this)
-    // Add a marker in Sydney and move the camera
     val loc = LatLng(location.lat, location.lng)
     val options = MarkerOptions()
-        .title("Hillfort")
+        .title(hillfort.title)
         .snippet("GPS: " + loc.toString())
         .draggable(true)
         .position(loc)

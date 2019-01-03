@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ShareActionProvider
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.R
@@ -79,11 +78,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
       //location button - set the location to the data in the hillfort
       hillfortLocation.setOnClickListener {
-        val location = Location(52.245696, -7.139102, 15f)
-        if (hillfort.zoom != 0f) {
-          location.lat =  hillfort.lat
-          location.lng = hillfort.lng
-          location.zoom = hillfort.zoom
+        val location = Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom)
+        if (location.zoom != 0f) {
+          location.lat =  hillfort.location.lat
+          location.lng = hillfort.location.lng
+          location.zoom = hillfort.location.zoom
         }
         startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST) //start google maps activity
       }
@@ -181,12 +180,12 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
 
     hillfortLocation.setOnClickListener {
-      val location = Location(52.245696, -7.139102, 15f)
-      if (hillfort.zoom != 0f) {
-        location.lat =  hillfort.lat
-        location.lng = hillfort.lng
-        location.zoom = hillfort.zoom
-      }
+      val location = Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom)
+          if (location.zoom != 0f) {
+              location.lat = hillfort.location.lat
+              location.lng = hillfort.location.lng
+              location.zoom = hillfort.location.zoom
+         }
       startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
     }
 
@@ -244,7 +243,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
           i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test")
           i.putExtra(android.content.Intent.EXTRA_TEXT, hillfort.title +
                   ": \n" + hillfort.description +
-                  " \nLocation: " + hillfort.lat + ", " + hillfort.lng +
+                  " \nLocation: " + hillfort.location.lat + ", " + hillfort.location.lng +
                   " \n Rating: " + hillfort.rating)
           startActivity(Intent.createChooser(i, "Share via"))
       }
@@ -291,9 +290,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       LOCATION_REQUEST -> {
         if (data != null) {
           val location = data.extras.getParcelable<Location>("location")
-          hillfort.lat = location.lat
-          hillfort.lng = location.lng
-          hillfort.zoom = location.zoom
+          hillfort.location.lat = location.lat
+          hillfort.location.lng = location.lng
+          hillfort.location.zoom = location.zoom
         }
       }
     }

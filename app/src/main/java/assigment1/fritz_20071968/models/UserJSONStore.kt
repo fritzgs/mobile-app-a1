@@ -95,9 +95,7 @@ class UserJSONStore : UserStore
       foundHillfort.title = hillfort.title
       foundHillfort.description = hillfort.description
       foundHillfort.image = hillfort.image
-      foundHillfort.lat = hillfort.lat
-      foundHillfort.lng = hillfort.lng
-      foundHillfort.zoom = hillfort.zoom
+      foundHillfort.location = hillfort.location
       foundHillfort.visited = hillfort.visited
       foundHillfort.date = hillfort.date
       foundHillfort.favourite = hillfort.favourite
