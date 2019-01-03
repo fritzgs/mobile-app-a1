@@ -16,7 +16,6 @@ import assigment1.fritz_20071968.models.HillfortModel
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 
 
-
 interface HillfortListener {
   fun onHillfortClick(hillfort: HillfortModel)
 }
@@ -40,9 +39,21 @@ class HillfortAdapter
   class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(hillfort: HillfortModel, listener: HillfortListener) {
-      itemView.hillfortTitle.text = hillfort.title
-      itemView.description.text = hillfort.description
+      itemView.cardtitle.text = hillfort.title
+      itemView.carddescription.text = hillfort.description
+      itemView.rating.text = "Rating: " + hillfort.rating.toString()
+
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
+
+      if(hillfort.favourite == true)
+      {
+        itemView.fav.setImageResource(android.R.drawable.btn_star_big_on)
+      }
+      else
+      {
+        itemView.fav.setImageResource(android.R.drawable.btn_star_big_off)
+      }
+
       //Changes the colour of the item depending on the visited status.
       if(hillfort.visited==true)
       {

@@ -24,7 +24,7 @@ import org.jetbrains.anko.*
 import java.util.*
 
 
-class HillfortActivity : AppCompatActivity(), AnkoLogger {
+class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
   var hillfort = HillfortModel()
   lateinit var app: MainApp
@@ -44,15 +44,31 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     app = application as MainApp
     var edit = false
 
+
     //WHEN EDIT MODE
     if (intent.hasExtra("hillfort_edit")) {
       edit = true
       hillfort = intent.extras.getParcelable<HillfortModel>("hillfort_edit") //gets the hilfort model
       //sets the layout components text using hillfort data
       hillfortTitle.setText(hillfort.title)
-      description.setText(hillfort.description)
+      carddescription.setText(hillfort.description)
       chooseImage.setText("Change Image")
       btnAdd.setText(R.string.save)
+      ratingBar.rating = hillfort.rating
+
+      if(hillfort.favourite == true)
+      {
+        favourite.setChecked(true)
+        favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_on)
+        favourite.textOn = ""
+      }
+      else
+      {
+        favourite.setChecked(false)
+        favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_off)
+        favourite.textOff = ""
+      }
+
 
       //Image button - if there's a picture already, change the button text
       hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
@@ -78,6 +94,29 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         visited_checkbox.setText(String.format(getString(R.string.checkbox), hillfort.date))
       }
 
+      //rating
+      ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+        hillfort.rating = rating
+      }
+
+      //favourite
+      favourite.setOnCheckedChangeListener{ _ , isChecked ->
+        if(favourite.isChecked) {
+          favourite.setChecked(true)
+          favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_on)
+          favourite.textOff = ""
+          hillfort.favourite = true
+
+        }
+        else {
+          favourite.setChecked(false)
+          favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_off)
+          favourite.textOff = ""
+          hillfort.favourite = false
+
+        }
+      }
+
       //@author Fritz Gerald Santos - visisted checkbox
       visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
         if(visited_checkbox.isChecked) //if it has been checked - set the text of the checkbox component to string/checkbox + date it was checked
@@ -98,6 +137,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
     //ADD NEW MODE
 
+
+
     //@author Fritz Gerald Santos - as previously described
     visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
       if(visited_checkbox.isChecked)
@@ -115,6 +156,29 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       }
     }
 
+    //rating
+    ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+      hillfort.rating = rating
+    }
+
+    //favourite
+    favourite.setOnCheckedChangeListener{ _ , isChecked ->
+      if(isChecked) {
+        favourite.setChecked(true)
+        favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_on)
+        favourite.textOn = ""
+        hillfort.favourite = true
+      }
+      else {
+        favourite.setChecked(false)
+        favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_off)
+        favourite.textOff = ""
+        hillfort.favourite = false
+
+      }
+    }
+
+
     hillfortLocation.setOnClickListener {
       val location = Location(52.245696, -7.139102, 15f)
       if (hillfort.zoom != 0f) {
@@ -129,7 +193,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     btnAdd.setOnClickListener()
     {
       hillfort.title = hillfortTitle.text.toString()
-      hillfort.description = description.text.toString()
+      hillfort.description = carddescription.text.toString()
       if (hillfort.title.isEmpty()) {
         toast(R.string.enter_hillfort_title) //notifies if title is missing
       } else {
@@ -154,10 +218,13 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_add, menu)
     return super.onCreateOptionsMenu(menu)
+
+
   }//END onCreateOptionsMenu
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
+
 
       R.id.item_cancel -> {
         startActivityForResult<HillfortListActivity>(0)

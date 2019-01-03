@@ -20,4 +20,6 @@
   <string name="total_visited">Visisted: %1$s / %2$s</string>
   <string name="checkbox">Visisted %1$s</string>
 
+  <string name="rating">Rating: %1$s</string>
+
 </resources>
