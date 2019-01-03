@@ -17,6 +17,8 @@ import android.widget.Toast
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.hillfort_list.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
@@ -24,12 +26,15 @@ import org.jetbrains.anko.startActivityForResult
 class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   lateinit var app: MainApp
+  lateinit var auth: FirebaseAuth
 
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.hillfort_list)
     app = application as MainApp
+    FirebaseApp.initializeApp(this)
+    auth = FirebaseAuth.getInstance()
 
     toolbarMain.title = title
     setSupportActionBar(toolbarMain)
@@ -120,6 +125,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
         {
           dialog, which ->
           app.setEmail("") //sets the user email in mainapp
+          auth.signOut()
           startActivityForResult<LoginActivity>(0) //goes back to login activity
           finish()
         }

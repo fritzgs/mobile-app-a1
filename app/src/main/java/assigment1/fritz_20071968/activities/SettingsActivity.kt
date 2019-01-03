@@ -20,12 +20,15 @@ import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.models.User
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.settings.*
 import org.jetbrains.anko.startActivityForResult
 
 class SettingsActivity : AppCompatActivity()
 {
   lateinit var app : MainApp
+  lateinit var auth : FirebaseAuth
 
   /**
    * sets the text of the components as name, email and password hint according to user data
@@ -35,6 +38,9 @@ class SettingsActivity : AppCompatActivity()
     super.onCreate(savedInstanceState)
     setContentView(R.layout.settings)
     app = application as MainApp
+
+    FirebaseApp.initializeApp(this)
+    auth = FirebaseAuth.getInstance()
 
     toolbarSettings.title = title
     setSupportActionBar(toolbarSettings)
@@ -107,6 +113,7 @@ class SettingsActivity : AppCompatActivity()
         {
           dialog, which ->
           app.setEmail("") //resets the email in mainapp
+          auth.signOut()
           startActivityForResult<LoginActivity>(0) //goes back to login activity
           finish()
         }
