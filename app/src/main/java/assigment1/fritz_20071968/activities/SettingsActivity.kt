@@ -22,6 +22,7 @@ import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.models.User
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.settings.*
 import org.jetbrains.anko.startActivityForResult
 
@@ -80,6 +81,7 @@ class SettingsActivity : AppCompatActivity()
     //if delete user - has alert dialog
    if(view.id==R.id.delete_user)
    {
+     var user : FirebaseUser? = auth.currentUser
      val confirmAlert = AlertDialog.Builder(this@SettingsActivity)
      confirmAlert.setTitle("Delete")
      confirmAlert.setMessage("Are you sure you want to delete this user?")
@@ -90,6 +92,7 @@ class SettingsActivity : AppCompatActivity()
        Toast.makeText(this@SettingsActivity, "Deleted User", Toast.LENGTH_SHORT).show()
        app.users.deleteUser(app.users.findUser(app.getEmail()))
        app.setEmail("")
+       user?.delete()
        startActivityForResult<LoginActivity>(0)
        finish()
      }

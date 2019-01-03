@@ -14,17 +14,22 @@ import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.models.User
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.signup.*
 
 class SignUpActivity : AppCompatActivity() {
 
 
   lateinit var app: MainApp
+  lateinit var auth: FirebaseAuth
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.signup)
     app = application as MainApp
+    FirebaseApp.initializeApp(this)
+    auth = FirebaseAuth.getInstance()
   }
 
 
@@ -39,11 +44,20 @@ class SignUpActivity : AppCompatActivity() {
         Toast.makeText(this@SignUpActivity, "Missing Entries", Toast.LENGTH_SHORT).show()
       }
       else{ //if all filled
-        app.users.createUser(User(name, email, pass,  ArrayList<HillfortModel>())) //add a new object of User with empty hillfort List
-        app.setEmail(email)//set the email in mainapp to the email entered
-        val signUpIntent = Intent(this@SignUpActivity, HillfortListActivity::class.java) //start hillfortList
-        startActivity(signUpIntent.putExtra("norm", "norm"))
-        finish()
+        if(pass.length > 6) {
+          app.users.createUser(User(name, email, pass, ArrayList<HillfortModel>())) //add a new object of User with empty hillfort List
+          app.setEmail(email)//set the email in mainapp to the email entered
+          auth.createUserWithEmailAndPassword(email, pass)
+          val signUpIntent = Intent(this@SignUpActivity, HillfortListActivity::class.java) //start hillfortList
+          startActivity(signUpIntent.putExtra("norm", "norm"))
+          finish()
+        }
+        else
+        {
+          Toast.makeText(this@SignUpActivity, "Password must be at least 6 characters.", Toast.LENGTH_SHORT).show()
+
+        }
+
       }
     }
     else if(view.id == R.id.signup_cancel)
