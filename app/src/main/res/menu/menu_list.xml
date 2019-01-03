@@ -4,6 +4,13 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
+      android:id="@+id/mapAll"
+      android:enabled="true"
+      android:icon="@android:drawable/ic_menu_mapmode"
+      android:title="Item"
+      android:visible="true"
+      app:showAsAction="always" />
+  <item
       android:id="@+id/fav"
       android:checkable="true"
       android:checked="false"

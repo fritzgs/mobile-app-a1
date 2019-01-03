@@ -204,7 +204,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
         }
         info("Add Button Pressed:  $hillfortTitle")
         setResult(AppCompatActivity.RESULT_OK)
-        finish() //closes the activity
+          startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
+          finish() //closes the activity
       }
     }//end btnAdd
 

@@ -124,19 +124,20 @@ class UserJSONStore : UserStore
     if(foundUser != null)
     {
       users.remove(user)
+      serialize()
     }
   }
 
   /**
    * updates users data
    */
-  override fun updateUser(user: User) {
-    var foundUser : User? = users.find { h -> h.email == user.email }
+  override fun updateUser(name: String, newEmail : String, password : String, oldEmail : String) {
+    var foundUser : User? = users.find { h -> h.email.equals(oldEmail)}
     if(foundUser != null)
     {
-      foundUser.name = user.name
-      foundUser.email = user.email
-      foundUser.password = user.password
+      foundUser.name = name
+      foundUser.email = newEmail
+      foundUser.password = password
       serialize()
     }
   }

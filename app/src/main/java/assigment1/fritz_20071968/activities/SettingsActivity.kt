@@ -64,11 +64,15 @@ class SettingsActivity : AppCompatActivity()
   //Event handler
   fun onClick(view: View)
   {
+    var user : FirebaseUser? = auth.currentUser
+
     if(view.id == R.id.save_settings) //if save
     {
-      if(!name_settings.text.isNullOrBlank() and !email_settings.text.isNullOrBlank() and !pass_settings.text.isNullOrBlank()) //as long as non of the text fields are empty
+      if(!name_settings.text.isNullOrBlank() and !email_settings.text.isNullOrBlank() and !pass_settings.text.isNullOrBlank() and (pass_settings.text.toString().length > 5)) //as long as non of the text fields are empty
       {
-        app.users.updateUser(User(name_settings.text.toString(), email_settings.text.toString(), pass_settings.text.toString(), app.users.findAll(app.getEmail()))) //update the user
+        app.users.updateUser(name_settings.text.toString(), email_settings.text.toString(), pass_settings.text.toString(), app.getEmail()) //update the user
+        user?.updateEmail(email_settings.text.toString())
+        user?.updatePassword(pass_settings.text.toString())
         app.setEmail(email_settings.text.toString()) //reset the email string in mainapp
         startActivity(Intent(this@SettingsActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
         finish()
@@ -81,7 +85,6 @@ class SettingsActivity : AppCompatActivity()
     //if delete user - has alert dialog
    if(view.id==R.id.delete_user)
    {
-     var user : FirebaseUser? = auth.currentUser
      val confirmAlert = AlertDialog.Builder(this@SettingsActivity)
      confirmAlert.setTitle("Delete")
      confirmAlert.setMessage("Are you sure you want to delete this user?")

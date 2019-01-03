@@ -26,7 +26,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
   override fun onMarkerClick(marker: Marker): Boolean {
     val loc = LatLng(location.lat, location.lng)
     marker.setSnippet("GPS : " + loc.toString())
-    return true  }
+    return true
+  }
 
   private lateinit var mMap: GoogleMap
   var location = Location()

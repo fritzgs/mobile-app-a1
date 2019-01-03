@@ -6,7 +6,7 @@ interface UserStore
   fun userExist(userEmail: String, password : String) : Boolean
   fun findAll(userEmail: String) : MutableList<HillfortModel>
   fun createUser(user : User)
-  fun updateUser(user : User)
+  fun updateUser(name : String, newEmail : String, password: String, oldEmail : String)
   fun deleteUser(user: User)
   fun createHillfort(hillfort : HillfortModel, userEmail : String)
   fun updateHillfort(hillfort : HillfortModel, userEmail: String)

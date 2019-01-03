@@ -44,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
         Toast.makeText(this@SignUpActivity, "Missing Entries", Toast.LENGTH_SHORT).show()
       }
       else{ //if all filled
-        if(pass.length > 6) {
+        if(pass.length > 5) {
           app.users.createUser(User(name, email, pass, ArrayList<HillfortModel>())) //add a new object of User with empty hillfort List
           app.setEmail(email)//set the email in mainapp to the email entered
           auth.createUserWithEmailAndPassword(email, pass)

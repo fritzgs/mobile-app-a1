@@ -71,22 +71,30 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_list, menu)
+
     if(intent.hasExtra("fav"))
     {
-      menu?.getItem(0)?.setChecked(true)
-      menu?.getItem(0)?.setIcon(android.R.drawable.btn_star_big_on)
+      menu?.getItem(1)?.setChecked(true)
+      menu?.getItem(1)?.setIcon(android.R.drawable.btn_star_big_on)
     }
     else if(intent.hasExtra("norm"))
     {
-      menu?.getItem(0)?.setChecked(false)
-      menu?.getItem(0)?.setIcon(android.R.drawable.btn_star_big_off)
+      menu?.getItem(1)?.setChecked(false)
+      menu?.getItem(1)?.setIcon(android.R.drawable.btn_star_big_off)
     }
+
     return super.onCreateOptionsMenu(menu)
 
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
+
+      R.id.mapAll ->
+      {
+        startActivityForResult<HillfortMapActivity>(0)
+        finish()
+      }
 
       R.id.fav ->
       {
