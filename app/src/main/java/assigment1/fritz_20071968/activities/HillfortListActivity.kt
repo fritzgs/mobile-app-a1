@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ListView
+import android.widget.SearchView
 import android.widget.Toast
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
@@ -27,6 +29,8 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   lateinit var app: MainApp
   lateinit var auth: FirebaseAuth
+  lateinit var search: SearchView
+  lateinit var listView : ListView
 
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +57,8 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   }
 
+
+
   //lists all the entries in Hillfort list
   private fun loadHillforts() {
     showHillforts(app.users.findAll(app.getEmail())) //finds hillfort list by user
@@ -72,6 +78,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_list, menu)
 
+
     if(intent.hasExtra("fav"))
     {
       menu?.getItem(1)?.setChecked(true)
@@ -89,6 +96,12 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
+
+      R.id.search ->
+      {
+        startActivityForResult<SearchActivity>(0)
+        finish()
+      }
 
       R.id.mapAll ->
       {

@@ -1,6 +1,5 @@
 package assigment1.fritz_20071968.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,7 +7,7 @@ import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.models.Location
-import com.google.android.gms.maps.CameraUpdateFactory
+
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -26,6 +25,7 @@ class HillfortMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.O
     private lateinit var app : MainApp
     private var locationList : ArrayList<Location> = arrayListOf()
 
+
     override fun onBackPressed() {
         startActivity(Intent(this@HillfortMapActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
         finish()
@@ -37,7 +37,6 @@ class HillfortMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.O
         setContentView(R.layout.activity_maps)
 
         app = application as MainApp
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -66,9 +65,7 @@ class HillfortMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.O
             createMarker(hillfort.location, hillfort.title)
         }
 
-        var loc : LatLng = LatLng(hillfortList[0].location.lat, hillfortList[0].location.lng)
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 5f))
 
     }
 

@@ -12,4 +12,5 @@ interface UserStore
   fun updateHillfort(hillfort : HillfortModel, userEmail: String)
   fun deleteHillfort(hillfort: HillfortModel, userEmail: String)
   fun findFav(userEmail : String) : MutableList<HillfortModel>
+  fun findQuery(query : String, userEmail : String) : MutableList<HillfortModel>
 }

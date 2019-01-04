@@ -185,4 +185,21 @@ class UserJSONStore : UserStore
     return favList
   }
 
+  override fun findQuery(query : String, userEmail: String): MutableList<HillfortModel>
+  {
+    var foundUser : User? = users.find { h -> h.email.equals(userEmail)}
+
+    var res : MutableList<HillfortModel> = mutableListOf()
+
+    for(h : HillfortModel in foundUser!!.hillfortList)
+    {
+      if(h.title.toLowerCase().contains(query.toLowerCase()))
+      {
+        res.add(h)
+      }
+    }
+    return res
+  }
+
+
 }
