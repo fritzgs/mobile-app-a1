@@ -4,7 +4,7 @@ Mobile App Dev
 <br />
 
 ## Features Accomplished
-Assignment 1 <br />
+Assignment 1 and 2 <br />
 
 - Splash Screen <br />
 - Login/Logout/Sign Up <br />
@@ -40,7 +40,7 @@ Shows WIT logo with some text. <br />
 ### Login <br />
 Text fields for email and password. <br />
 Two buttons - login and sign up. <br />
-If the email AND password exist is correct in Firebase -> login <br />
+If the email AND password is correct in Firebase -> login <br />
 else -> Toast displays "Login Failed" <br />
 
 
