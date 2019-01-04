@@ -62,7 +62,8 @@ class HillfortMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.O
 
         for (hillfort in hillfortList)
         {
-            createMarker(hillfort.location, hillfort.title)
+            if(hillfort.location.lat != 0.0 && hillfort.location.lng != 0.0 && hillfort.location.zoom != 0f)
+                createMarker(hillfort.location, hillfort.title)
         }
 
 

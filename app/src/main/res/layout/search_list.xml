@@ -10,48 +10,35 @@
   <TextView
       android:id="@+id/searchTitle"
       android:layout_width="match_parent"
-      android:layout_height="30dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="8dp"
+      android:layout_height="56dp"
       android:background="@color/colorAccent"
       android:gravity="center"
       android:text="Search for Hillforts"
-      android:textColor="@android:color/white"
 
+      android:textColor="@android:color/white"
       android:textSize="18dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"
+      tools:layout_editor_absoluteX="0dp" />
 
   <SearchView
       android:id="@+id/search"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="32dp"
-      android:layout_marginEnd="8dp"
+      android:layout_marginTop="48dp"
       android:background="@android:color/darker_gray"
       android:queryHint="Search Hillfort Title"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"></SearchView>
+      app:layout_constraintTop_toTopOf="parent"
+      tools:layout_editor_absoluteX="0dp"></SearchView>
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/search_recyclerView"
       android:layout_width="match_parent"
       android:layout_height="475dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginBottom="12dp"
+      android:layout_marginTop="96dp"
       android:background="@color/colorPrimary"
       android:scrollbars="vertical"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/search"
-      app:layout_constraintVertical_bias="1.0"></android.support.v7.widget.RecyclerView>
+      app:layout_constraintTop_toTopOf="parent"
+      tools:layout_editor_absoluteX="0dp"></android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

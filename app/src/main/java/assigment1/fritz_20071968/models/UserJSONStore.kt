@@ -79,6 +79,7 @@ class UserJSONStore : UserStore
     {
       foundUser!!.hillfortList.remove(foundHillfort)
     }
+    serialize()
   }
 
   /**

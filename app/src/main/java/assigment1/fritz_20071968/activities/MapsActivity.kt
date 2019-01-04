@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener{
   override fun onMarkerClick(marker: Marker): Boolean {
-    val loc = LatLng(location.lat, location.lng)
+    val loc = LatLng(location.lat!!, location.lng!!)
     marker.setSnippet("GPS : " + loc.toString())
     return true
   }
@@ -80,14 +80,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     mMap = googleMap
     mMap.setOnMarkerDragListener(this)
     mMap.setOnMarkerClickListener(this)
-    val loc = LatLng(location.lat, location.lng)
+    val loc = LatLng(location.lat!!, location.lng!!)
     val options = MarkerOptions()
         .title(hillfort.title)
         .snippet("GPS: " + loc.toString())
         .draggable(true)
         .position(loc)
     mMap.addMarker(options)
-    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom!!))
   }
 
 }

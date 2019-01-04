@@ -175,4 +175,8 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     }
     super.onActivityResult(requestCode, resultCode, data)
   }
+
+  override fun onBackPressed() {
+    //disable back press
+  }
 }

@@ -181,11 +181,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
     hillfortLocation.setOnClickListener {
       val location = Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom)
-          if (location.zoom != 0f) {
-              location.lat = hillfort.location.lat
-              location.lng = hillfort.location.lng
-              location.zoom = hillfort.location.zoom
-         }
+      if (location.zoom != 0f) {
+        location.lat = hillfort.location.lat
+        location.lng = hillfort.location.lng
+        location.zoom = hillfort.location.zoom
+      }
       startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
     }
 
@@ -199,13 +199,18 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       } else {
         if (edit) {
           app.users.updateHillfort(hillfort.copy(), app.getEmail()) //update if edit
+          toast("Changes saved") //notifies if title is missing
+
         } else {
           app.users.createHillfort(hillfort.copy(), app.getEmail()) //add if new
+          toast("Hillfort has been added") //notifies if title is missing
+
         }
         info("Add Button Pressed:  $hillfortTitle")
-        setResult(AppCompatActivity.RESULT_OK)
-          startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
-          finish() //closes the activity
+
+//        setResult(AppCompatActivity.RESULT_OK)
+//          startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
+//          finish() //closes the activity
       }
     }//end btnAdd
 
@@ -239,14 +244,25 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
 
       R.id.share ->
       {
+
           val i = Intent(android.content.Intent.ACTION_SEND)
           i.type = "text/plain"
           i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test")
+        if(hillfort.location!=null) {
           i.putExtra(android.content.Intent.EXTRA_TEXT, hillfort.title +
                   ": \n" + hillfort.description +
-                  " \nLocation: " + hillfort.location.lat + ", " + hillfort.location.lng +
+                  " \nLocation: " + hillfort.location!!.lat + ", " + hillfort.location!!.lng +
                   " \n Rating: " + hillfort.rating)
           startActivity(Intent.createChooser(i, "Share via"))
+        }
+        else
+        {
+          i.putExtra(android.content.Intent.EXTRA_TEXT, hillfort.title +
+                  ": \n" + hillfort.description +
+                  " \nLocation: Unknown"  +
+                  " \n Rating: " + hillfort.rating)
+          startActivity(Intent.createChooser(i, "Share via"))
+        }
       }
 
 
@@ -295,6 +311,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
           hillfort.location.lng = location.lng
           hillfort.location.zoom = location.zoom
         }
+//
       }
     }
   }//End onActivityResult
