@@ -1,4 +1,4 @@
-# Hillfort Assignment 1 <br />
+# Hillfort Assignment 1 and 2 <br />
 Mobile App Dev
 <br />
 <br />
