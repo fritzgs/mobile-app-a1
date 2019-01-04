@@ -10,8 +10,8 @@ package assigment1.fritz_20071968.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -49,7 +49,7 @@ class SettingsActivity : AppCompatActivity()
     name_settings.setText(app.users.findUser(app.getEmail()).name)
     email_settings.setText(app.users.findUser(app.getEmail()).email)
     pass_settings.setHint("PASSWORD")
-    //Couts the total visited
+    //Counts the total visited
     var count : Int = 0
     for(i in app.users.findAll(app.getEmail()))
     {
@@ -64,15 +64,20 @@ class SettingsActivity : AppCompatActivity()
   //Event handler
   fun onClick(view: View)
   {
+    //get current user in firebase
     var user : FirebaseUser? = auth.currentUser
 
     if(view.id == R.id.save_settings) //if save
     {
+      //if all text is filled and password length is > 6
       if(!name_settings.text.isNullOrBlank() and !email_settings.text.isNullOrBlank() and !pass_settings.text.isNullOrBlank() and (pass_settings.text.toString().length > 5)) //as long as non of the text fields are empty
       {
-        app.users.updateUser(name_settings.text.toString(), email_settings.text.toString(), pass_settings.text.toString(), app.getEmail()) //update the user
+        app.users.updateUser(name_settings.text.toString(), email_settings.text.toString(), app.getEmail()) //update the user
+
+        //change the email and password in firebase
         user?.updateEmail(email_settings.text.toString())
         user?.updatePassword(pass_settings.text.toString())
+
         app.setEmail(email_settings.text.toString()) //reset the email string in mainapp
         startActivity(Intent(this@SettingsActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
         finish()
@@ -95,6 +100,8 @@ class SettingsActivity : AppCompatActivity()
        Toast.makeText(this@SettingsActivity, "Deleted User", Toast.LENGTH_SHORT).show()
        app.users.deleteUser(app.users.findUser(app.getEmail()))
        app.setEmail("")
+       auth.signOut() //clear login cache from firebase
+       //delete user from firebase
        user?.delete()
        startActivityForResult<LoginActivity>(0)
        finish()
@@ -119,7 +126,7 @@ class SettingsActivity : AppCompatActivity()
         {
           dialog, which ->
           app.setEmail("") //resets the email in mainapp
-          auth.signOut()
+          auth.signOut() //clear login cache from firebase
           startActivityForResult<LoginActivity>(0) //goes back to login activity
           finish()
         }

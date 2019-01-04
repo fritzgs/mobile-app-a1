@@ -6,7 +6,7 @@ package assigment1.fritz_20071968.activities
 
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +23,7 @@ interface HillfortListener {
 class HillfortAdapter
 
   constructor(private var hillforts: List<HillfortModel>,
-                                   private val listener: HillfortListener) : RecyclerView.Adapter<HillfortAdapter.MainHolder>() {
+                                   private val listener: HillfortListener) : androidx.recyclerview.widget.RecyclerView.Adapter<HillfortAdapter.MainHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
     return MainHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_hillfort, parent, false))
@@ -36,8 +36,9 @@ class HillfortAdapter
 
   override fun getItemCount(): Int = hillforts.size
 
-  class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  class MainHolder constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
+    //includes title, description, rating, image and favourite
     fun bind(hillfort: HillfortModel, listener: HillfortListener) {
       itemView.cardtitle.text = hillfort.title
       itemView.carddescription.text = hillfort.description
@@ -45,6 +46,7 @@ class HillfortAdapter
 
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
 
+      //indicate whether the hillfort entry is favourite or not
       if(hillfort.favourite == true)
       {
         itemView.fav.setImageResource(android.R.drawable.btn_star_big_on)

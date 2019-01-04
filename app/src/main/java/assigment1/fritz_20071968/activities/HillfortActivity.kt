@@ -7,9 +7,9 @@
 package assigment1.fritz_20071968.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import assigment1.fritz_20071968.main.MainApp
@@ -56,13 +56,15 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       btnAdd.setText(R.string.save)
       ratingBar.rating = hillfort.rating
 
+      //set the icon of the favourite feature
+      //If it has been set as favoruite - set the rating bar to true and change the icon to on
       if(hillfort.favourite == true)
       {
         favourite.setChecked(true)
         favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_on)
         favourite.textOn = ""
       }
-      else
+      else //set the rating bar to false and the icon to off
       {
         favourite.setChecked(false)
         favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_off)
@@ -94,12 +96,12 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
         visited_checkbox.setText(String.format(getString(R.string.checkbox), hillfort.date))
       }
 
-      //rating
+      //rating bar listener - when changed, change the hillfort value to new value
       ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
         hillfort.rating = rating
       }
 
-      //favourite
+      //favourite listener - if clicked, set check, change hillfort favourite to true and change icon to on
       favourite.setOnCheckedChangeListener{ _ , isChecked ->
         if(favourite.isChecked) {
           favourite.setChecked(true)
@@ -108,7 +110,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
           hillfort.favourite = true
 
         }
-        else {
+        else { //if clicked, set check to false, change hillfort favourite to false and change icon to off
           favourite.setChecked(false)
           favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_off)
           favourite.textOff = ""
@@ -135,10 +137,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       }
     }
 
+
     //ADD NEW MODE
-
-
-
     //@author Fritz Gerald Santos - as previously described
     visited_checkbox.setOnCheckedChangeListener{buttonView, isChecked ->
       if(visited_checkbox.isChecked)
@@ -156,12 +156,12 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       }
     }
 
-    //rating
+    //rating bar listener - change the value of hillfort rating to new value
     ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
       hillfort.rating = rating
     }
 
-    //favourite
+    //favourite listener - if clicked, set check, change hillfort favourite to true and change icon to on
     favourite.setOnCheckedChangeListener{ _ , isChecked ->
       if(isChecked) {
         favourite.setChecked(true)
@@ -169,7 +169,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
         favourite.textOn = ""
         hillfort.favourite = true
       }
-      else {
+      else { //if clicked, set check to false, change hillfort favourite to false and change icon to off
         favourite.setChecked(false)
         favourite.background = resources.getDrawable(android.R.drawable.btn_star_big_off)
         favourite.textOff = ""
@@ -179,6 +179,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
     }
 
 
+    //location button listener
     hillfortLocation.setOnClickListener {
       val location = Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom)
       if (location.zoom != 0f) {
@@ -199,35 +200,42 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       } else {
         if (edit) {
           app.users.updateHillfort(hillfort.copy(), app.getEmail()) //update if edit
-          toast("Changes saved") //notifies if title is missing
+          toast("Changes saved") //notifies when change saved
 
         } else {
           app.users.createHillfort(hillfort.copy(), app.getEmail()) //add if new
-          toast("Hillfort has been added") //notifies if title is missing
+          toast("Hillfort has been added") //notifies when add saved
+          setResult(AppCompatActivity.RESULT_OK)
+          startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
+          finish() //closes the activity
 
         }
         info("Add Button Pressed:  $hillfortTitle")
 
-//        setResult(AppCompatActivity.RESULT_OK)
-//          startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
-//          finish() //closes the activity
       }
     }//end btnAdd
 
 
 
+    //image picker listener
     chooseImage.setOnClickListener {
       showImagePicker(this, IMAGE_REQUEST)
     }//End chooseImage
   }//ENF onCreate
 
 
+  override fun onBackPressed() {
+    startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
+    finish()
+    super.onBackPressed()
+  }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_add, menu)
 
 
 
+    //if in edit more, enable sharing and delete
     if(intent.hasExtra("hillfort_edit"))
     {
       menu?.getItem(0)?.setVisible(true)
@@ -245,16 +253,19 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       R.id.share ->
       {
 
-          val i = Intent(android.content.Intent.ACTION_SEND)
-          i.type = "text/plain"
-          i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test")
-        if(hillfort.location!=null) {
+        val i = Intent(android.content.Intent.ACTION_SEND)
+        i.type = "text/plain"
+        i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test")
+
+        //if the location has been set and not the default, include in the text
+        if(hillfort.location.lat != 0.0 && hillfort.location.lng != 0.0 && hillfort.location.zoom != 0f) {
           i.putExtra(android.content.Intent.EXTRA_TEXT, hillfort.title +
                   ": \n" + hillfort.description +
-                  " \nLocation: " + hillfort.location!!.lat + ", " + hillfort.location!!.lng +
+                  " \nLocation: " + hillfort.location.lat + ", " + hillfort.location.lng +
                   " \n Rating: " + hillfort.rating)
           startActivity(Intent.createChooser(i, "Share via"))
         }
+        // if the location is still default, put location unknown in the text
         else
         {
           i.putExtra(android.content.Intent.EXTRA_TEXT, hillfort.title +
@@ -266,6 +277,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger{
       }
 
 
+      //when cancle button is pressed
       R.id.item_cancel -> {
         startActivity(Intent(this@HillfortActivity, HillfortListActivity::class.java).putExtra("norm", "norm"))
         finish()

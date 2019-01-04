@@ -45,27 +45,28 @@ class UserJSONStore : UserStore
     if(foundUser != null) //if user is found and not null
     {
       // returns user object
-      return User(foundUser.name, foundUser.email, foundUser.password, foundUser.hillfortList)
+      return User(foundUser.name, foundUser.email, foundUser.hillfortList)
     }
     return null!!
   }
 
-  /**
-   * checks if user exist
-   * @param String email
-   * @param String password
-   * @return boolean
-   */
-  override fun userExist(userEmail : String, pass : String) : Boolean
-  {
-    var result : Boolean = false
-    var foundUser : User? = users.find { u -> u.email.equals(userEmail) } //looks for user by email
-    if(foundUser != null && foundUser.password.equals(pass)) //if not null and password is right
-    {
-      result = true
-    }
-    return result
-  }
+  //no longer needed due to firebase authentication
+//  /**
+//   * checks if user exist
+//   * @param String email
+//   * @param String password
+//   * @return boolean
+//   */
+//  override fun userExist(userEmail : String, pass : String) : Boolean
+//  {
+//    var result : Boolean = false
+//    var foundUser : User? = users.find { u -> u.email.equals(userEmail) } //looks for user by email
+//    if(foundUser != null) //if not null and password is right
+//    {
+//      result = true
+//    }
+//    return result
+//  }
 
   /**
    * Deletes hillfort based on id
@@ -132,13 +133,12 @@ class UserJSONStore : UserStore
   /**
    * updates users data
    */
-  override fun updateUser(name: String, newEmail : String, password : String, oldEmail : String) {
+  override fun updateUser(name: String, newEmail : String, oldEmail : String) {
     var foundUser : User? = users.find { h -> h.email.equals(oldEmail)}
     if(foundUser != null)
     {
       foundUser.name = name
       foundUser.email = newEmail
-      foundUser.password = password
       serialize()
     }
   }
@@ -171,6 +171,9 @@ class UserJSONStore : UserStore
     users = Gson().fromJson(jsonString, ltype)
   }
 
+  /**
+   * return hillfort list of all hillforts that are favourited
+   */
   override fun findFav(userEmail: String): MutableList<HillfortModel> {
     var foundUser : User? = users.find { h -> h.email.equals(userEmail)}
 
@@ -186,6 +189,10 @@ class UserJSONStore : UserStore
     return favList
   }
 
+
+  /**
+   * return hillfort list that contain the query string in its title
+   */
   override fun findQuery(query : String, userEmail: String): MutableList<HillfortModel>
   {
     var foundUser : User? = users.find { h -> h.email.equals(userEmail)}

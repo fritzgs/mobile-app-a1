@@ -8,7 +8,7 @@ package assigment1.fritz_20071968.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import assigment1.fritz_20071968.R
@@ -34,19 +34,22 @@ class LoginActivity : AppCompatActivity(){
   fun onClick(view : View) {
     if (view.id == R.id.loginBtn)
     {
-      auth.signInWithEmailAndPassword(emailText.text.toString(), passText.text.toString())
+        //authentication using firebase
+        auth.signInWithEmailAndPassword(emailText.text.toString(), passText.text.toString())
               .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful)
                 {
-                  app.setEmail(emailText.text.toString())
-                  Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()
-                  val loginIntent = Intent(this@LoginActivity, HillfortListActivity::class.java) //start the HillfortListActivity
-                  startActivity(loginIntent.putExtra("norm", "norm"))
-                  finish()
+                    //if successfull - load list activity
+                    app.setEmail(emailText.text.toString())
+                    Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()
+                    val loginIntent = Intent(this@LoginActivity, HillfortListActivity::class.java) //start the HillfortListActivity
+                    startActivity(loginIntent.putExtra("norm", "norm"))
+                    finish()
                 }
                 else
                 {
-                  Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show() //if credentials are wrong
+                    //else, notify failed login
+                    Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show() //if credentials are wrong
                 }
             }
     }

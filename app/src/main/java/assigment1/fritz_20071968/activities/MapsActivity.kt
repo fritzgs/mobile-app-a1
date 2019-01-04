@@ -8,7 +8,7 @@ package assigment1.fritz_20071968.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.models.HillfortModel
@@ -80,7 +80,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     mMap = googleMap
     mMap.setOnMarkerDragListener(this)
     mMap.setOnMarkerClickListener(this)
-    val loc = LatLng(location.lat!!, location.lng!!)
+    val loc = LatLng(location.lat, location.lng)
     val options = MarkerOptions()
         .title(hillfort.title)
         .snippet("GPS: " + loc.toString())

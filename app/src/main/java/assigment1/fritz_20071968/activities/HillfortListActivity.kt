@@ -8,9 +8,9 @@ package assigment1.fritz_20071968.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
@@ -37,15 +37,18 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.hillfort_list)
     app = application as MainApp
+
+    //initialise firebase app and get authentication instance
     FirebaseApp.initializeApp(this)
     auth = FirebaseAuth.getInstance()
 
     toolbarMain.title = title
     setSupportActionBar(toolbarMain)
 
-    val layoutManager = LinearLayoutManager(this)
+    val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
 
+    //whenever this activity is called, an intent extra is passed
     if(intent.hasExtra("fav"))
     {
       loadFavourites()
@@ -70,6 +73,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     recyclerView.adapter?.notifyDataSetChanged()
   }
 
+  //list all entries that are favourites = true
   private fun loadFavourites()
   {
     showHillforts(app.users.findFav(app.getEmail()))
@@ -79,6 +83,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     menuInflater.inflate(R.menu.menu_list, menu)
 
 
+    //set the icon of the favourite menu item
     if(intent.hasExtra("fav"))
     {
       menu?.getItem(1)?.setChecked(true)
@@ -97,18 +102,21 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
 
+      //start the search activity
       R.id.search ->
       {
         startActivityForResult<SearchActivity>(0)
         finish()
       }
 
+      //start activity of all hillfort location map
       R.id.mapAll ->
       {
         startActivityForResult<HillfortMapActivity>(0)
         finish()
       }
 
+      //when favourite menu item is clicked, start activity passing extra
       R.id.fav ->
       {
         if(item.isChecked)
@@ -146,7 +154,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
         {
           dialog, which ->
           app.setEmail("") //sets the user email in mainapp
-          auth.signOut()
+          auth.signOut() //clear login cache in firebase
           startActivityForResult<LoginActivity>(0) //goes back to login activity
           finish()
         }

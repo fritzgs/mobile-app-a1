@@ -7,7 +7,7 @@
 package assigment1.fritz_20071968.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import assigment1.fritz_20071968.R
 import java.util.*

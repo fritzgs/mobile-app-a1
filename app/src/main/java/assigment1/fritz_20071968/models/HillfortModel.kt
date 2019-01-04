@@ -26,5 +26,4 @@ data class Location(var lat: Double = 0.0,
 @Parcelize
 data class User(var name : String? = "",
                 var email : String? ="",
-                var password : String? = "",
                 var hillfortList : MutableList<HillfortModel>) : Parcelable

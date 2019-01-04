@@ -2,11 +2,12 @@ package assigment1.fritz_20071968.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import assigment1.fritz_20071968.R
 import assigment1.fritz_20071968.main.MainApp
 import assigment1.fritz_20071968.models.HillfortModel
 import assigment1.fritz_20071968.models.Location
+import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,7 +24,6 @@ class HillfortMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.O
 
     private lateinit var mMap: GoogleMap
     private lateinit var app : MainApp
-    private var locationList : ArrayList<Location> = arrayListOf()
 
 
     override fun onBackPressed() {
@@ -45,6 +45,7 @@ class HillfortMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.O
     }
 
 
+    //create a marker for location and use title as title
     fun createMarker(location : Location, title: String): Marker
     {
         var loc = LatLng(location.lat, location.lng)
@@ -54,16 +55,25 @@ class HillfortMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.O
 
     }
 
+
     override fun onMapReady(googleMap: GoogleMap)
     {
         mMap = googleMap
 
+        //hillfort list of all hillforts associate with user
         var hillfortList : MutableList<HillfortModel> = app.users.findAll(app.getEmail())
 
-        for (hillfort in hillfortList)
-        {
-            if(hillfort.location.lat != 0.0 && hillfort.location.lng != 0.0 && hillfort.location.zoom != 0f)
+        //for each hillfort in list that's not default location, create a marker
+        for (hillfort in hillfortList) {
+            if (hillfort.location.lat != 0.0 && hillfort.location.lng != 0.0 && hillfort.location.zoom != 0f)
                 createMarker(hillfort.location, hillfort.title)
+        }
+
+        //this enables this activity to run when the hillfort list is empty.
+        if(hillfortList.isNotEmpty())
+        {
+            var loc = LatLng(hillfortList[0].location.lat, hillfortList[0].location.lng)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 5f))
         }
 
 
